@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/home"
+        android:title="Home"
+        android:icon="@drawable/baseline_home_24"/>
+
+    <item
+        android:id="@+id/list"
+        android:title="List"
+        android:icon="@drawable/mingcute__clapperboard_fill"/>
+
+    <item
+        android:id="@+id/bookmarks"
+        android:title="Bookmarks"
+        android:icon="@drawable/lucide__list_video"/>
+
+    <item
+        android:id="@+id/history"
+        android:title="History"
+        android:icon="@drawable/material_symbols__history_rounded"/>
+
+    <item
+        android:id="@+id/profile"
+        android:title="Profile"
+        android:icon="@drawable/mdi__user"/>
+
+</menu>
