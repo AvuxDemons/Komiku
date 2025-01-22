@@ -1,5 +1,6 @@
 package com.avux.komiku;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -19,10 +20,13 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
 
     private final List<JSONObject> episodeList;
     private final Context context;
-
-    public EpisodeAdapter(Context context, List<JSONObject> episodeList) {
+    private final String animeTitle;
+    private final String animeDescription;
+    public EpisodeAdapter(Context context, List<JSONObject> episodeList, String animeTitle, String animeDescription) {
         this.context = context;
         this.episodeList = episodeList;
+        this.animeTitle = animeTitle;
+        this.animeDescription = animeDescription;
     }
 
     @NonNull
@@ -32,6 +36,7 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
         return new EpisodeViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull EpisodeViewHolder holder, int position) {
         try {
@@ -39,7 +44,6 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
             int episodeNumber = episode.getInt("episodeNumber");
             String episodeTitle = episode.getString("title");
 
-            // Ambil URL dari stream
             String embedUrl = episode.getJSONArray("streams")
                     .getJSONObject(0)
                     .getString("url");
@@ -48,17 +52,18 @@ public class EpisodeAdapter extends RecyclerView.Adapter<EpisodeAdapter.EpisodeV
             holder.episodeTitle.setText(episodeTitle);
 
             holder.itemView.setOnClickListener(v -> {
-                // Buat intent untuk membuka EpisodeViewerActivity
                 Intent intent = new Intent(context, EpisodeViewerActivity.class);
-                intent.putExtra("embed_url", embedUrl); // Kirim URL sebagai extra
-                context.startActivity(intent); // Jalankan Activity
+                intent.putExtra("embed_url", embedUrl);
+                intent.putExtra("episode_number", episodeNumber);
+                intent.putExtra("anime_title", animeTitle);
+                intent.putExtra("anime_description", animeDescription);
+                context.startActivity(intent);
             });
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
-
 
     @Override
     public int getItemCount() {

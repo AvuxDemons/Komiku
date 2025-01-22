@@ -7,6 +7,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,12 +31,27 @@ public class EpisodeViewerActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             webView.restoreState(savedInstanceState);
         } else {
-            // Get the raw embed iframe HTML from the Intent
+            String animeTitle = getIntent().getStringExtra("anime_title");
             String embedHtml = getIntent().getStringExtra("embed_url");
+            int episodeNumber = getIntent().getIntExtra("episode_number", 0);
+            String animeDescription = getIntent().getStringExtra("anime_description");
 
-            // Generate responsive HTML to ensure the iframe is full size
-            String responsiveHtml = "<html><body style='margin:0; padding:0;'>"
-                    + "<div style='width:100%; height:100%; display:flex; justify-content:center; align-items:center;'>"
+            TextView titleTextView = findViewById(R.id.anime_title);
+            titleTextView.setText(animeTitle);
+
+            TextView episodeTextView = findViewById(R.id.episode_title);
+            episodeTextView.setText("Episode " + episodeNumber);
+            TextView descriptionTextView = findViewById(R.id.anime_description);
+            descriptionTextView.setText(animeDescription);
+
+            String responsiveHtml = "<html><style> iframe { position: absolute !important;\n" +
+                    "  top: 0;\n" +
+                    "  left: 0;\n" +
+                    "  width: 100%;\n" +
+                    "  height: 100%;\n" +
+                    "  z-index: 2 }" +
+                    "</style><body style='margin:0; padding:0;'>"
+                    + "<div style='display: relative;'>"
                     + embedHtml
                     + "</div></body></html>";
 

@@ -79,7 +79,8 @@ public class AnimeDetailsActivity extends AppCompatActivity {
                 episodeList.add(episodeArray.getJSONObject(i));
             }
 
-            EpisodeAdapter adapter = new EpisodeAdapter(this, episodeList);
+            // Buat adapter dengan judul anime
+            EpisodeAdapter adapter = new EpisodeAdapter(this, episodeList, animeTitle, animeDescription);
             episodeRecyclerView.setAdapter(adapter);
 
         } catch (JSONException e) {
